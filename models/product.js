@@ -9,6 +9,7 @@ module.exports = class Product {
     this.description = description;
   }
   save() {
+    this.id = Math.random().toString();
     const p = path.join(__dirname, "..", "data", "products.json");
     fs.readFile(p, (err, fileContent) => {
       let products = [];
@@ -29,6 +30,17 @@ module.exports = class Product {
         cb([]);
       } else {
         cb(JSON.parse(fileContent));
+      }
+    });
+  }
+  static findById(id, cb) {
+    const p = path.join(__dirname, "..", "data", "products.json");
+    fs.readFile(p, (err, fileContent) => {
+      if (!err) {
+        let products;
+        products = JSON.parse(fileContent);
+        const product = products.find((p) => p.id === id);
+        cb(product);
       }
     });
   }
