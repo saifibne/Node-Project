@@ -20,6 +20,6 @@ block content
                             form(action='/cart', method='POST')
                                 button.btn(type='submit') Add To Cart
                                 input(type='hidden', name='productId', value=product.id)
-                            a.btn(href=`/products/${product.id}`) Details
+                            a.btn(href=`/products/${product._id}`) Details
         else
             h1 No Products
