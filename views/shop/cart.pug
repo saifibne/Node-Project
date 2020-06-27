@@ -1,13 +1,21 @@
 extends ../layouts/main-layout
 
+block style
+    link(rel='stylesheet' href='/css/cart.css')
+
 block content
     if products.length > 0
-        ul
+        ul.cart__item-list
             each p in products
-                li
-                    h4 #{p.product.title} (#{p.qty})
-                form(action='/cart-delete-item', method='POST')
-                    input(type='hidden', name='productId', value=p.product.id)
-                    button.btn(type='submit') Delete
+                li.cart__item
+                    h1 #{p.title}
+                    h2 Quantity:#{p.quantity}
+                    form(action='/cart-delete-item', method='POST')
+                        input(type='hidden', name='productId', value=p._id)
+                        button.btn.danger(type='submit') Delete
+        hr
+        div.centered
+            form(action="/create-order" method="POST")
+                button.btn(type="submit") Order Now
     else
         h2 No items in cart
