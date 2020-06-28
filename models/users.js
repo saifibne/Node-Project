@@ -56,6 +56,33 @@ class User {
         });
       });
   }
+  getOrder() {
+    const db = getDb();
+    return this.getCart()
+      .then((products) => {
+        const order = {
+          items: products,
+          user: {
+            userId: new mongoDb.ObjectId(this._id),
+            name: this.name,
+          },
+        };
+        return db.collection("Orders").insertOne(order);
+      })
+      .then((result) => {
+        this.cart.products = [];
+        return db
+          .collection("users")
+          .updateOne(
+            { _id: new mongoDb.ObjectId(this._id) },
+            { $set: { cart: { products: [] } } }
+          );
+      });
+  }
+  getAllOrders() {
+    const db = getDb();
+    return db.collection("Orders").find({ "user.userId": this._id }).toArray();
+  }
   deleteById(prodId) {
     let updatedCartProducts = this.cart.products.filter((prod) => {
       return prod.productId.toString() !== prodId.toString();

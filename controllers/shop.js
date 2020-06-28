@@ -74,7 +74,19 @@ exports.cartDeleteItem = (req, res, next) => {
     res.redirect("/cart");
   });
 };
-//
-// exports.getOrders = (req, res, next) => {
-//   res.render("shop/orders", { title: "Orders", path: "/orders" });
-// };
+
+exports.getOrders = (req, res, next) => {
+  req.user.getAllOrders().then((orders) => {
+    res.render("shop/orders", {
+      title: "Orders",
+      path: "/orders",
+      orders: orders,
+    });
+  });
+};
+
+exports.postCreateOrder = (req, res, next) => {
+  req.user.getOrder().then(() => {
+    res.redirect("/orders");
+  });
+};
