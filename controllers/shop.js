@@ -8,7 +8,7 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         title: "products",
         path: "/products",
-        logIn: req.session.isLoggedIn,
+        // logIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -24,7 +24,7 @@ exports.getProduct = (req, res, next) => {
         product: product,
         title: product.title,
         path: "/products",
-        logIn: req.session.isLoggedIn,
+        // logIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -39,7 +39,7 @@ exports.getIndex = (req, res, next) => {
         prods: products,
         title: "shop",
         path: "/",
-        logIn: req.session.isLoggedIn,
+        // logIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -57,7 +57,7 @@ exports.getCart = (req, res, next) => {
         title: "Cart",
         path: "/cart",
         products: products,
-        logIn: req.session.isLoggedIn,
+        // logIn: req.session.isLoggedIn,
       });
     });
 };
@@ -90,7 +90,7 @@ exports.getOrders = (req, res, next) => {
       title: "Orders",
       path: "/orders",
       orders: orders,
-      logIn: req.session.isLoggedIn,
+      // logIn: req.session.isLoggedIn,
     });
   });
 };
@@ -106,7 +106,7 @@ exports.postCreateOrder = (req, res, next) => {
       });
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user._id,
         },
         products: updatedProducts,

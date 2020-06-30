@@ -21,6 +21,7 @@ block content
                                 form(action='/cart', method='POST')
                                     button.btn(type='submit') Add To Cart
                                     input(type='hidden', name='productId', value=product._id)
+                                    input(type='hidden', name='_csrf', value=_csrf)
                                 a.btn(href=`/products/${product._id}`) Details
                             else
                                 a.btn(href=`/products/${product._id}`) Details
