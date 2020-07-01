@@ -210,6 +210,20 @@ form {
   color: white;
 }
 
+.message {
+  margin: auto;
+  width: 40%;
+  border: 1px solid #3746ad;
+  border-radius: 3px;
+  background-color: #a0d6f8;
+  padding: 0.5px;
+  text-align: center;
+}
+
+.error-message {
+  border-color: red;
+  background-color: #f58787;
+}
 
 @media (min-width: 768px) {
   .main-header__nav {
