@@ -9,15 +9,27 @@ block content
         if errorMessage
             div.message.error-message
                 p #{errorMessage}
-        form.login-form(action="/signup" method="POST")
+        form.login-form(action="/signup" method="POST" novalidate)
             div.form-control
                 label(for="email") E-Mail
-                input(type="email" name="email" id="email")
+                input(type="email",
+                    name="email",
+                    id="email",
+                    value=oldInput.email,
+                    class=(errors.find(p => p.param === 'email') ? 'invalid' : ''))
             div.form-control
                 label(for="password") Password
-                input(type="password" name="password" id="password")
+                input(type="password",
+                    name="password",
+                    id="password",
+                    value=oldInput.password,
+                    class=(errors.find(p => p.param === 'password') ? 'invalid' : ''))
             div.form-control
                 label(for="confirm-password") Confirm Password
-                input(type="password" name="confirmPassword" id="confirm-password")
+                input(type="password",
+                    name="confirmPassword",
+                    id="confirm-password",
+                    value=oldInput.confirmPassword,
+                    class=(errors.find(p => p.param === 'confirmPassword') ? 'invalid' : ''))
             button.btn(type="submit") Sign Up
             input(type='hidden', name='_csrf', value=_csrf)

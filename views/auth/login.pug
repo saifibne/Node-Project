@@ -12,13 +12,19 @@ block content
         if successMessage
             div.message
                 p #{successMessage}
-        form.login-form(action="/login" method="POST")
+        form.login-form(action="/login" method="POST" novalidate)
             div.form-control
                 label(for="email") E-Mail
-                input(type="email" name="email" id="email")
+                input(type="email",
+                    name="email",
+                    id="email",
+                    class=(errors.find(p => p.param === 'email') ? 'invalid' : ''))
             div.form-control
                 label(for="password") Password
-                input(type="password" name="password" id="password")
+                input(type="password",
+                    name="password",
+                    id="password",
+                    class=(errors.find(p => p.param === 'email') ? 'invalid' : ''))
             button.btn(type="submit") Login
             input(type='hidden', name='_csrf', value=_csrf)
         a.centered(href='/reset') Reset Password
