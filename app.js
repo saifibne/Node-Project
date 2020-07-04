@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const multer = require("multer");
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -24,10 +25,33 @@ const store = new MongoStore({
 });
 const csrfProtection = csrf();
 
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + "-" + file.originalname);
+  },
+});
+
+const filter = (req, file, cb) => {
+  if (
+    file.mimeType === "image/png" ||
+    file.mimeType === "image/jpg" ||
+    file.mimeType === "image/jpeg"
+  ) {
+    cb(null, false);
+  } else {
+    cb(null, true);
+  }
+};
+
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({ storage: multerStorage, fileFilter: filter }).single("image"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(
   session({
     secret: "my secret",
@@ -38,6 +62,11 @@ app.use(
 );
 app.use(csrfProtection);
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.logIn = req.session.isLoggedIn;
+  res.locals._csrf = req.csrfToken();
+  next();
+});
 app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
@@ -51,11 +80,7 @@ app.use((req, res, next) => {
       console.log(err);
     });
 });
-app.use((req, res, next) => {
-  res.locals.logIn = req.session.isLoggedIn;
-  res.locals._csrf = req.csrfToken();
-  next();
-});
+
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);

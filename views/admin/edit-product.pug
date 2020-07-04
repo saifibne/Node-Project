@@ -7,13 +7,13 @@ block style
 block content
     main
         if editing === false
-            form.product-form(action="/admin/add-product", method="POST")
+            form.product-form(action="/admin/add-product", method="POST", enctype='multipart/form-data')
                 div.form-control
                     label(for="title") Title
                     input(type="text" name="title" id="title")
                 div.form-control
-                    label(for="imageUrl") Image Url
-                    input(type="text" name="imageUrl" id="imageUrl")
+                    label(for="image") Image Url
+                    input(type="file" name="image" id="image")
                 div.form-control
                     label(for="price") Price
                     input(type="number" name="price" id="price" step='0.01')
@@ -23,13 +23,13 @@ block content
                 button.btn(type="submit") Add Product
                 input(type='hidden', name='_csrf', value=_csrf)
         else
-            form.product-form(action="/admin/edit-product", method="POST")
+            form.product-form(action="/admin/edit-product", method="POST" enctype="multipart/form-data")
                 div.form-control
                     label(for="title") Title
                     input(type="text" name="title" id="title" value=product.title)
                 div.form-control
-                    label(for="imageUrl") Image Url
-                    input(type="text" name="imageUrl" id="imageUrl" value=product.imageUrl)
+                    label(for="image") Image Url
+                    input(type="file" name="image" id="image" )
                 div.form-control
                     label(for="price") Price
                     input(type="number" name="price" id="price" step='0.01' value=product.price)
