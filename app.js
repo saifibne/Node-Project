@@ -85,6 +85,15 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 app.use(errorController.get404);
+app.use((err, req, res, next) => {
+  console.log(err);
+  if (err) {
+    res.render("500", {
+      title: "Error",
+      path: "/error",
+    });
+  }
+});
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/shop", {
