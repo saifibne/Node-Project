@@ -25,5 +25,15 @@ block content
                                 a.btn(href=`/products/${product._id}`) Details
                             else
                                 a.btn(href=`/products/${product._id}`) Details
+            section.pagination
+                a(href='?page=1') 1
+                if prevPage !== 1 && hasPrevPage
+                    a(href=`?page=${prevPage}`) #{prevPage}
+                if currentPage !== 1
+                    a.active(href=`?page=${currentPage}`) #{currentPage}
+                if hasNextPage && nextPage !== lastPage
+                    a(href=`?page=${nextPage}`) #{nextPage}
+                if lastPage !== currentPage
+                    a(href=`?page=${lastPage}`) #{lastPage}
         else
             h1 No Products
