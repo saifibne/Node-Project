@@ -18,7 +18,8 @@ const User = require("./models/users");
 
 const app = express();
 const store = new MongoStore({
-  url: "mongodb://127.0.0.1:27017/shop",
+  url:
+    "mongodb+srv://saifibne:olD0RDAbVtdMtawG@cluster0.5up7i.mongodb.net/shop?retryWrites=true&w=majority",
   mongoOptions: {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -100,10 +101,13 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(`mongodb://127.0.0.1:27017/${process.env.MONGODB_DATABASE}`, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
+  .connect(
+    `mongodb+srv://saifibne:olD0RDAbVtdMtawG@cluster0.5up7i.mongodb.net/shop?retryWrites=true&w=majority`,
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    }
+  )
   .then(() => {
     app.listen(process.env.PORT || 3000);
   });
