@@ -7,6 +7,8 @@ const MongoStore = require("connect-mongo")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer");
+const helmet = require("helmet");
+const compression = require("compression");
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -48,6 +50,8 @@ const filter = (req, file, cb) => {
 
 app.set("view engine", "pug");
 app.set("views", "./views");
+app.use(helmet());
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ storage: multerStorage, fileFilter: filter }).single("image"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -96,10 +100,10 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/shop", {
+  .connect(`mongodb://127.0.0.1:27017/${process.env.MONGODB_DATABASE}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
   .then(() => {
-    app.listen(3000);
+    app.listen(process.env.PORT || 3000);
   });
