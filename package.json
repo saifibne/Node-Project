@@ -24,9 +24,6 @@
     "pug": "^3.0.0"
   },
   "devDependencies": {},
-  "engines": {
-    "node": "12.18.1"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production MONGODB_DATABASE=shop node app.js"
